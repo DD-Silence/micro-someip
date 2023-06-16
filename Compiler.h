@@ -44,7 +44,7 @@ extern "C" {
 #define COMPILER_MODULE_ID                      (198U)
 
 /* AUTOSAR Software Specification Document Version Information */
-#define COMPILER_AR_RELEASE_MAJOR_VERSION       (21U)
+#define COMPILER_AR_RELEASE_MAJOR_VERSION       (22U)
 #define COMPILER_AR_RELEASE_MINOR_VERSION       (11U)
 #define COMPILER_AR_RELEASE_REVISION_VERSION    (0U)
 
