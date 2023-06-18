@@ -36,8 +36,38 @@ extern "C" {
 /****************************************************************************************************
  *  GLOBAL CONSTANT MACROS
  ***************************************************************************************************/
+/**
+ * @brief
+ * @implements
+ */
+#define SOMEIP_MEMBER_TYPE_BOOLEAN              (0U)
+#define SOMEIP_MEMBER_TYPE_UINT8                (1U)
+#define SOMEIP_MEMBER_TYPE_UINT16               (2U)
+#define SOMEIP_MEMBER_TYPE_UINT32               (3U)
+#define SOMEIP_MEMBER_TYPE_UINT64               (4U)
+#define SOMEIP_MEMBER_TYPE_SINT8                (5U)
+#define SOMEIP_MEMBER_TYPE_SINT16               (6U)
+#define SOMEIP_MEMBER_TYPE_SINT32               (7U)
+#define SOMEIP_MEMBER_TYPE_SINT64               (8U)
+#define SOMEIP_MEMBER_TYPE_FLOAT32              (9U)
+#define SOMEIP_MEMBER_TYPE_FLOAT64              (10U)
+#define SOMEIP_MEMBER_TYPE_STRUCT               (11U)
+#define SOMEIP_MEMBER_TYPE_STRING               (12U)
+#define SOMEIP_MEMBER_TYPE_ARRAY                (12U)
+#define SOMEIP_MEMBER_TYPE_UNION                (13U)
 
-
+/**
+ * @brief
+ * @implements
+ */
+#define SOMEIP_WIRE_TYPE_8BIT                   (0U)
+#define SOMEIP_WIRE_TYPE_16BIT                  (1U)
+#define SOMEIP_WIRE_TYPE_32BIT                  (2U)
+#define SOMEIP_WIRE_TYPE_64BIT                  (3U)
+#define SOMEIP_WIRE_TYPE_COMPLEX_CONFIGURED     (4U)
+#define SOMEIP_WIRE_TYPE_COMPLEX_LENGTH_ONE     (5U)
+#define SOMEIP_WIRE_TYPE_COMPLEX_LENGTH_TWO     (6U)
+#define SOMEIP_WIRE_TYPE_COMPLEX_LENGTH_FOUR    (7U)
 
 /****************************************************************************************************
  *  GLOBAL FUNCTION MACROS
@@ -48,8 +78,73 @@ extern "C" {
 /****************************************************************************************************
  *  GLOBAL DATA TYPES AND STRUCTURES
  ***************************************************************************************************/
+/**
+ * @brief
+ * @implements
+ */
+typedef struct
+{
+    uint32 MessageId;
+    uint32 Length;
+    uint32 RequestId;
+    uint8 ProtocolVersion;
+    uint8 InterfaceVersion;
+    uint8 MessageType;
+    uint8 ReturnCode;
+} SomeIp_HeadType;
 
+/**
+ * @brief
+ * @implements
+ */
+typedef struct
+{
+    SomeIp_HeadType Head;
+    uint8 *Payload;
+} SomeIp_MessageType;
 
+/**
+ * @brief
+ * @implements
+ */
+typedef struct
+{
+    uint8 WireType;
+    uint16 DataId;
+} SomeIp_MemberTagType;
+
+/**
+ * @brief
+ * @implements
+ */
+typedef struct
+{
+    uint8 LengthSize;
+    uint32 Length;
+} SomeIp_MemberLengthType;
+
+/**
+ * @brief
+ * @implements
+ */
+typedef struct SomeIp_MemberType_Tag SomeIp_MemberType;
+
+struct SomeIp_PrimitiveType
+{
+    
+};
+
+struct SomeIp_MemberType_Tag
+{
+    uint8 type;
+    const SomeIp_MemberTagType *Tag;
+    const SomeIp_MemberLengthType *Length;
+    uint8 AlignSize;
+    uint8 *payload;
+    uint32 childrenNumber;
+    SomeIp_MemberType *children;
+    SomeIp_MemberType *parent;
+};
 
 /****************************************************************************************************
  *  GLOBAL DATA PROTOTYPES

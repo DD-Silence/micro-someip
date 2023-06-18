@@ -15,61 +15,69 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /****************************************************************************************************
- * @file    Filename:           Template.h
- * @date    Date:               20xx-xx-xx
- * @version Version:            1.0
- * @brief   Description:        Description of file.
+ * @file    Filename:           SomeIp_Serializer.c
+ * @date    Date:               2023-06-16
+ * @version Version:            0.0.1
+ * @brief   Description:        Source file of SOME/IP serializer implementation
+ ***************************************************************************************************/
+/****************************************************************************************************
+ *  INCLUDES
  ***************************************************************************************************/
 
-#ifndef TEMPLETE_H
-#define TEMPLETE_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "SomeIp_Types.h"
 
 /****************************************************************************************************
- * INCLUDES
+ *  LOCAL CONSTANT MACROS
  ***************************************************************************************************/
-
+#define SOMEIP_WIRE_TYPE_OFFSET         (12U)
 
 
 /****************************************************************************************************
- *  GLOBAL CONSTANT MACROS
+ *  LOCAL FUNCTION MACROS
  ***************************************************************************************************/
 
 
 
 /****************************************************************************************************
- *  GLOBAL FUNCTION MACROS
+ *  LOCAL DATA TYPES AND STRUCTURES
  ***************************************************************************************************/
 
 
 
 /****************************************************************************************************
- *  GLOBAL DATA TYPES AND STRUCTURES
+ *  LOCAL DATA PROTOTYPES
  ***************************************************************************************************/
 
 
 
 /****************************************************************************************************
- *  GLOBAL DATA PROTOTYPES
+ *  GLOBAL DATA
  ***************************************************************************************************/
 
 
 
 /****************************************************************************************************
- *  GLOBAL FUNCTION PROTOTYPES
+ *  LOCAL FUNCTION PROTOTYPES
  ***************************************************************************************************/
+static uint16 SomeIp_ConstructTagType(const SomeIp_MemberTagType *Tag);
+static void SomeIp_ParseTagType(SomeIp_MemberTagType *Tag, const uint16 Value);
 
 
-
-#ifdef __cplusplus
+/****************************************************************************************************
+ *  FUNCTION IMPLEMETATION
+ ***************************************************************************************************/
+static INLINE uint16 SomeIp_ConstructTagType(const SomeIp_MemberTagType *Tag)
+{
+    return (((uint16)Tag->WireType << SOMEIP_WIRE_TYPE_OFFSET) | (Tag->DataId));
 }
-#endif
 
-#endif /* TEMPLETE_H */
+static INLINE void SomeIp_ParseTagType(SomeIp_MemberTagType *Tag, const uint16 Value)
+{
+    Tag->WireType = (uint8)(Value >> 12U);
+    Tag->DataId = Value & (0x0FFFU);
+}
+
 
 /****************************************************************************************************
- *  END OF FILE: Template.h
+ *  END OF FILE: SomeIp_Serializer.c
  ***************************************************************************************************/

@@ -24,7 +24,7 @@
  *  INCLUDES
  ***************************************************************************************************/
 
-
+#include "SomeIp.h"
 
 /****************************************************************************************************
  *  LOCAL CONSTANT MACROS
@@ -35,7 +35,7 @@
 /****************************************************************************************************
  *  LOCAL FUNCTION MACROS
  ***************************************************************************************************/
-
+#define SOMEIP_CONSTRUCT_U32(hh, hl, lh, ll)    (((hh) << 24) | ((hl) << 16) | ((lh) << 8) | (ll))
 
 
 /****************************************************************************************************
@@ -59,15 +59,50 @@
 /****************************************************************************************************
  *  LOCAL FUNCTION PROTOTYPES
  ***************************************************************************************************/
-
+static void SomeIp_ConstructHead(const SomeIp_HeadType *head, uint8 *buffer);
+static void SomeIp_ConstructHeadWithoutLength(const SomeIp_HeadType *head, uint8 *buffer);
+static void SomeIp_ParseHead(SomeIp_HeadType *head, const uint8 *buffer);
 
 
 /****************************************************************************************************
  *  FUNCTION IMPLEMETATION
  ***************************************************************************************************/
+static INLINE void SomeIp_ConstructHead(const SomeIp_HeadType *head, uint8 *buffer)
+{
+    uint32 *cursor = (uint32 *)buffer;
+    cursor[0] = head->MessageId;
+    cursor[1] = head->Length;
+    cursor[2] = head->RequestId;
+    cursor[3] = SOMEIP_CONSTRUCT_U32(head->ProtocolVersion, head->InterfaceVersion, 
+                                     head->MessageType, head->ReturnCode);
+    
+}
+
+static INLINE void SomeIp_ConstructHeadWithoutLength(const SomeIp_HeadType *head, uint8 *buffer)
+{
+    uint32 *cursor = (uint32 *)buffer;
+
+    cursor[0] = head->MessageId;
+    cursor[2] = head->RequestId;
+    cursor[3] = SOMEIP_CONSTRUCT_U32(head->ProtocolVersion, head->InterfaceVersion, 
+                                     head->MessageType, head->ReturnCode);
+}
+
+static INLINE void SomeIp_ParseHead(SomeIp_HeadType *head, const uint8 *buffer)
+{
+    uint32 *cursor = (uint32 *)buffer;
+
+    head->MessageId = cursor[0];
+    head->Length = cursor[1];
+    head->RequestId = cursor[2];
+    head->ProtocolVersion = buffer[12];
+    head->InterfaceVersion = buffer[13];
+    head->MessageType = buffer[14];
+    head->ReturnCode = buffer[15];    
+}
 
 
 
 /****************************************************************************************************
- *  END OF FILE: Template.c
+ *  END OF FILE: SomeIp.c
  ***************************************************************************************************/

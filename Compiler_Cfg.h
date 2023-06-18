@@ -53,58 +53,32 @@ extern "C" {
 /****************************************************************************************************
  *  GLOBAL FUNCTION MACROS
  ***************************************************************************************************/
-/* PORT begin */
-#define PORT_PUBLIC_CODE                /* API functions                      */
-#define PORT_PUBLIC_CONST               /* API constants                      */
-#define PORT_PRIVATE_CODE               /* Internal functions                 */
-#define PORT_PRIVATE_DATA               /* Module internal data               */
-#define PORT_PRIVATE_CONST              /* Internal ROM Data                  */
-#define PORT_APPL_CODE                  /* callbacks of the Application       */
-#define PORT_APPL_CONST                 /* Applications' ROM Data             */
-#define PORT_APPL_DATA                  /* Applications' RAM Data             */
-#define PORT_FAST_DATA                  /* 'Near' RAM Data                    */
-#define PORT_FAST_CODE                  /* API functions                      */
-#define PORT_FAST_CONST                 /* API constants                      */
-#define PORT_FAST_DATA                  /* API constants                      */
-#define PORT_CONFIG_CONST               /* Desc. Tables -> Config-dependent   */
-#define PORT_CONFIG_DATA                /* Config. dependent (reg. size) data */
-#define PORT_INIT_DATA                  /* Data which is initialized during Startup */
-#define PORT_NOINIT_DATA                /* Data which is not initialized during Startup */
-#define PORT_CONST                      /* Data Constants Memory class for global variables which are initialized after every reset */
-#define PORT_VAR_NOINIT                 /* Memory class for global variables which are initialized by driver    */
-#define PORT_CODE
-#define PORT_CALLOUT_CODE
-#define PORT_VAR_POWER_ON_INIT
-#define PORT_VAR_FAST
-#define PORT_REGSPACE
-/* PORT end */
-
-/* DIO begin */
-#define DIO_PUBLIC_CODE                /* API functions                       */
-#define DIO_PUBLIC_CONST               /* API constants                       */
-#define DIO_PRIVATE_CODE               /* Internal functions                  */
-#define DIO_PRIVATE_DATA               /* Module internal data                */
-#define DIO_PRIVATE_CONST              /* Internal ROM Data                   */
-#define DIO_APPL_CODE                  /* callbacks of the Application        */
-#define DIO_APPL_CONST                 /* Applications' ROM Data              */
-#define DIO_APPL_DATA                  /* Applications' RAM Data              */
-#define DIO_FAST_DATA                  /* 'Near' RAM Data                     */
-#define DIO_FAST_CODE                  /* API functions                       */
-#define DIO_FAST_CONST                 /* API constants                       */
-#define DIO_FAST_DATA                  /* API constants                       */
-#define DIO_CONFIG_CONST               /* Desc. Tables -> Config-dependent    */
-#define DIO_CONFIG_DATA                /* Config. dependent (reg. size) data  */
-#define DIO_INIT_DATA                  /* Data which is initialized during Startup */
-#define DIO_NOINIT_DATA                /* Data which is not initialized during Startup */
-#define DIO_CONST                      /* Data Constants                      */
-#define DIO_VAR                        /* Memory class for global variables which are initialized after every reset  */
-#define DIO_VAR_NOINIT                 /* Memory class for global variables which are initialized by driver     */
-#define DIO_CODE
-#define DIO_CALLOUT_CODE
-#define DIO_VAR_POWER_ON_INIT
-#define DIO_VAR_FAST
-#define DIO_REGSPACE
-/* DIO end */
+/* SOME/IP begin */
+#define SOMEIP_PUBLIC_CODE              /* API functions                       */
+#define SOMEIP_PUBLIC_CONST             /* API constants                       */
+#define SOMEIP_PRIVATE_CODE             /* Internal functions                  */
+#define SOMEIP_PRIVATE_DATA             /* Module internal data                */
+#define SOMEIP_PRIVATE_CONST            /* Internal ROM Data                   */
+#define SOMEIP_APPL_CODE                /* callbacks of the Application        */
+#define SOMEIP_APPL_CONST               /* Applications' ROM Data              */
+#define SOMEIP_APPL_DATA                /* Applications' RAM Data              */
+#define SOMEIP_FAST_DATA                /* 'Near' RAM Data                     */
+#define SOMEIP_FAST_CODE                /* API functions                       */
+#define SOMEIP_FAST_CONST               /* API constants                       */
+#define SOMEIP_FAST_DATA                /* API constants                       */
+#define SOMEIP_CONFIG_CONST             /* Desc. Tables -> Config-dependent    */
+#define SOMEIP_CONFIG_DATA              /* Config. dependent (reg. size) data  */
+#define SOMEIP_INIT_DATA                /* Data which is initialized during Startup */
+#define SOMEIP_NOINIT_DATA              /* Data which is not initialized during Startup */
+#define SOMEIP_CONST                    /* Data Constants                      */
+#define SOMEIP_VAR                      /* Memory class for global variables which are initialized after every reset  */
+#define SOMEIP_VAR_NOINIT               /* Memory class for global variables which are initialized by driver     */
+#define SOMEIP_CODE
+#define SOMEIP_CALLOUT_CODE
+#define SOMEIP_VAR_POWER_ON_INIT
+#define SOMEIP_VAR_FAST
+#define SOMEIP_REGSPACE
+/* SOME/IP end */
 
 /* DET begin */
 #define DET_PUBLIC_CODE                /* API functions                       */

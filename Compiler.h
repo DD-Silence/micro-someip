@@ -65,7 +65,7 @@ extern "C" {
 #endif
 #endif  /* !DISABLE_MCAL_ASR_VER_CHECK */
 #if !defined(DISABLE_MCAL_SW_VER_CHECK)
-#if ((COMPILER_SW_MAJOR_VERSION != COMPILER_CFG_GEN_SW_MAJOR_VERSION)    \
+#if ((COMPILER_SW_MAJOR_VERSION != COMPILER_CFG_GEN_SW_MAJOR_VERSION)       \
     || (COMPILER_SW_MINOR_VERSION != COMPILER_CFG_GEN_SW_MINOR_VERSION)     \
     || (COMPILER_SW_PATCH_VERSION != COMPILER_CFG_GEN_SW_PATCH_VERSION))
 #error "Opps, Compiler.h and Compiler_Cfg.h Software version not match!"
@@ -126,11 +126,11 @@ extern "C" {
  *        keyword inline.
  *        [SWS_COMPILER_00060]
  *        The compiler abstraction shall provide the LOCAL_INLINE define for abstraction
- *        of the keyword inline in functions with “static” scope.
+ *        of the keyword inline in functions with "static" scope.
  */
 #if defined(_ARMGCC_C_)
-#define INLINE  inline
-#define LOCAL_INLINE    static inline
+#define INLINE inline
+#define LOCAL_INLINE static inline
 #endif /* defined(_ARMGCC_C_) */
 
 #if defined(_GCC_C_)

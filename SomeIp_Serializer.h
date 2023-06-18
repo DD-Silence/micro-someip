@@ -15,14 +15,13 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /****************************************************************************************************
- * @file    Filename:           Template.h
- * @date    Date:               20xx-xx-xx
- * @version Version:            1.0
- * @brief   Description:        Description of file.
+ * @file    Filename:           SomeIp_Serializer.h
+ * @date    Date:               2023-06-16
+ * @version Version:            0.0.1
+ * @brief   Description:        Header file. of SOME/IP serializer implementation
  ***************************************************************************************************/
-
-#ifndef TEMPLETE_H
-#define TEMPLETE_H
+#ifndef SOMEIP_SERIALIZER_H
+#define SOMEIP_SERIALIZER_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,7 +31,7 @@ extern "C" {
  * INCLUDES
  ***************************************************************************************************/
 
-
+#include "Std_Types.h"
 
 /****************************************************************************************************
  *  GLOBAL CONSTANT MACROS
@@ -68,8 +67,9 @@ extern "C" {
 }
 #endif
 
-#endif /* TEMPLETE_H */
+#endif /* SOMEIP_SERIALIZER_H */
 
 /****************************************************************************************************
- *  END OF FILE: Template.h
+ *  END OF FILE: SomeIp_Serializer.h
  ***************************************************************************************************/
+
