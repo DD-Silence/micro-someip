@@ -59,25 +59,15 @@
 /****************************************************************************************************
  *  LOCAL FUNCTION PROTOTYPES
  ***************************************************************************************************/
-static void SomeIp_ConstructHead(const SomeIp_HeadType *head, uint8 *buffer);
 static void SomeIp_ConstructHeadWithoutLength(const SomeIp_HeadType *head, uint8 *buffer);
+static void SomeIp_ConstructHead(const SomeIp_HeadType *head, uint8 *buffer);
 static void SomeIp_ParseHead(SomeIp_HeadType *head, const uint8 *buffer);
-
+static SomeIp_MessageIdType SomeIp_ParseMessageId(uint32 Value);
+static SomeIp_RequestIdType SomeIp_ParseRequestId(uint32 Value);
 
 /****************************************************************************************************
  *  FUNCTION IMPLEMETATION
  ***************************************************************************************************/
-static INLINE void SomeIp_ConstructHead(const SomeIp_HeadType *head, uint8 *buffer)
-{
-    uint32 *cursor = (uint32 *)buffer;
-    cursor[0] = head->MessageId;
-    cursor[1] = head->Length;
-    cursor[2] = head->RequestId;
-    cursor[3] = SOMEIP_CONSTRUCT_U32(head->ProtocolVersion, head->InterfaceVersion, 
-                                     head->MessageType, head->ReturnCode);
-    
-}
-
 static INLINE void SomeIp_ConstructHeadWithoutLength(const SomeIp_HeadType *head, uint8 *buffer)
 {
     uint32 *cursor = (uint32 *)buffer;
@@ -86,6 +76,14 @@ static INLINE void SomeIp_ConstructHeadWithoutLength(const SomeIp_HeadType *head
     cursor[2] = head->RequestId;
     cursor[3] = SOMEIP_CONSTRUCT_U32(head->ProtocolVersion, head->InterfaceVersion, 
                                      head->MessageType, head->ReturnCode);
+}
+
+static INLINE void SomeIp_ConstructHead(const SomeIp_HeadType *head, uint8 *buffer)
+{
+    uint32 *cursor = (uint32 *)buffer;
+
+    SomeIp_ConstructHeadWithoutLength(head, buffer);
+    cursor[1] = head->Length;
 }
 
 static INLINE void SomeIp_ParseHead(SomeIp_HeadType *head, const uint8 *buffer)
@@ -101,7 +99,25 @@ static INLINE void SomeIp_ParseHead(SomeIp_HeadType *head, const uint8 *buffer)
     head->ReturnCode = buffer[15];    
 }
 
+static INLINE SomeIp_MessageIdType SomeIp_ParseMessageId(uint32 Value)
+{
+    SomeIp_MessageIdType MessageId =
+    {
+        .ServideId = (uint16)(Value >> 16),
+        .MethodId = (uint16)Value
+    };
+    return MessageId;
+}
 
+static INLINE SomeIp_RequestIdType SomeIp_ParseRequestId(uint32 Value)
+{
+    SomeIp_RequestIdType RequestId =
+    {
+        .ClientId = (uint16)(Value >> 16),
+        .SessionId = (uint16)Value
+    };
+    return RequestId;
+}
 
 /****************************************************************************************************
  *  END OF FILE: SomeIp.c

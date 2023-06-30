@@ -15,69 +15,65 @@
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 /****************************************************************************************************
- * @file    Filename:           SomeIp_Serializer.c
+ * @file    Filename:           SomeIpXf.h
  * @date    Date:               2023-06-16
  * @version Version:            0.0.1
- * @brief   Description:        Source file of SOME/IP serializer implementation
+ * @brief   Description:        Header file. of SOME/IP transformer implementation
  ***************************************************************************************************/
-/****************************************************************************************************
- *  INCLUDES
- ***************************************************************************************************/
+#ifndef SOMEIPXF_H
+#define SOMEIPXF_H
 
-#include "SomeIp_Types.h"
-
-/****************************************************************************************************
- *  LOCAL CONSTANT MACROS
- ***************************************************************************************************/
-#define SOMEIP_WIRE_TYPE_OFFSET         (12U)
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /****************************************************************************************************
- *  LOCAL FUNCTION MACROS
+ * INCLUDES
  ***************************************************************************************************/
 
-
+#include "Std_Types.h"
 
 /****************************************************************************************************
- *  LOCAL DATA TYPES AND STRUCTURES
+ *  GLOBAL CONSTANT MACROS
  ***************************************************************************************************/
-
-
-
-/****************************************************************************************************
- *  LOCAL DATA PROTOTYPES
- ***************************************************************************************************/
-
+#define SOMEIPXF_E_OK                   (0x00U)
+#define SOMEIPXF_E_UNINIT               (0x01U)
+#define SOMEIPXF_E_INIT_FAILED          (0x02U)
+#define SOMEIPXF_E_PARAM                (0x03U)
+#define SOMEIPXF_E_PARAM_POINTER        (0x04U)
 
 
 /****************************************************************************************************
- *  GLOBAL DATA
+ *  GLOBAL FUNCTION MACROS
  ***************************************************************************************************/
 
 
 
 /****************************************************************************************************
- *  LOCAL FUNCTION PROTOTYPES
+ *  GLOBAL DATA TYPES AND STRUCTURES
  ***************************************************************************************************/
-static uint16 SomeIp_ConstructTagType(const SomeIp_MemberTagType *Tag);
-static void SomeIp_ParseTagType(SomeIp_MemberTagType *Tag, const uint16 Value);
+
 
 
 /****************************************************************************************************
- *  FUNCTION IMPLEMETATION
+ *  GLOBAL DATA PROTOTYPES
  ***************************************************************************************************/
-static INLINE uint16 SomeIp_ConstructTagType(const SomeIp_MemberTagType *Tag)
-{
-    return (((uint16)Tag->WireType << SOMEIP_WIRE_TYPE_OFFSET) | (Tag->DataId));
+
+
+
+/****************************************************************************************************
+ *  GLOBAL FUNCTION PROTOTYPES
+ ***************************************************************************************************/
+
+
+
+#ifdef __cplusplus
 }
+#endif
 
-static INLINE void SomeIp_ParseTagType(SomeIp_MemberTagType *Tag, const uint16 Value)
-{
-    Tag->WireType = (uint8)(Value >> 12U);
-    Tag->DataId = Value & (0x0FFFU);
-}
-
+#endif /* SOMEIP_SERIALIZER_H */
 
 /****************************************************************************************************
- *  END OF FILE: SomeIp_Serializer.c
+ *  END OF FILE: SomeIp_Serializer.h
  ***************************************************************************************************/
+

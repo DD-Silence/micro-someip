@@ -1,6 +1,6 @@
 CMAKE_MINIMUM_REQUIRED (VERSION 3.8)
 PROJECT("micro-someip" C)
-ADD_LIBRARY("micro-someip" STATIC SomeIp.c SomeIp_Serializer.c)
+ADD_LIBRARY("micro-someip" STATIC SomeIp.c SomeIpXf.c)
 
 add_subdirectory(test)
 
