@@ -40,21 +40,21 @@ extern "C" {
  * @brief
  * @implements
  */
-#define SOMEIP_MEMBER_TYPE_BOOLEAN              (0U)
-#define SOMEIP_MEMBER_TYPE_UINT8                (1U)
-#define SOMEIP_MEMBER_TYPE_UINT16               (2U)
-#define SOMEIP_MEMBER_TYPE_UINT32               (3U)
-#define SOMEIP_MEMBER_TYPE_UINT64               (4U)
-#define SOMEIP_MEMBER_TYPE_SINT8                (5U)
-#define SOMEIP_MEMBER_TYPE_SINT16               (6U)
-#define SOMEIP_MEMBER_TYPE_SINT32               (7U)
-#define SOMEIP_MEMBER_TYPE_SINT64               (8U)
-#define SOMEIP_MEMBER_TYPE_FLOAT32              (9U)
-#define SOMEIP_MEMBER_TYPE_FLOAT64              (10U)
-#define SOMEIP_MEMBER_TYPE_STRUCT               (11U)
-#define SOMEIP_MEMBER_TYPE_STRING               (12U)
-#define SOMEIP_MEMBER_TYPE_ARRAY                (12U)
-#define SOMEIP_MEMBER_TYPE_UNION                (13U)
+#define SOMEIP_DATA_TYPE_BOOLEAN                (0U)
+#define SOMEIP_DATA_TYPE_UINT8                  (1U)
+#define SOMEIP_DATA_TYPE_UINT16                 (2U)
+#define SOMEIP_DATA_TYPE_UINT32                 (3U)
+#define SOMEIP_DATA_TYPE_UINT64                 (4U)
+#define SOMEIP_DATA_TYPE_SINT8                  (5U)
+#define SOMEIP_DATA_TYPE_SINT16                 (6U)
+#define SOMEIP_DATA_TYPE_SINT32                 (7U)
+#define SOMEIP_DATA_TYPE_SINT64                 (8U)
+#define SOMEIP_DATA_TYPE_FLOAT32                (9U)
+#define SOMEIP_DATA_TYPE_FLOAT64                (10U)
+#define SOMEIP_DATA_TYPE_STRUCT                 (11U)
+#define SOMEIP_DATA_TYPE_STRING                 (12U)
+#define SOMEIP_DATA_TYPE_ARRAY                  (12U)
+#define SOMEIP_DATA_TYPE_UNION                  (13U)
 
 /**
  * @brief
@@ -157,29 +157,16 @@ typedef enum
     SOMEIPXF_LENGTH_FIELD_SIZE_MAX
 } SomeIpXf_LengthFieldSizeType;
 
-/**
- * @brief
- * @implements
- */
-typedef struct
-{
-    SomeIpXf_LengthFieldSizeType Size;
-    uint32 Length;
-} SomeIp_MemberLengthType;
-
 typedef enum
 {
-    SOMEIPXF_MEMBER_KIND_BASE,
-    SOMEIPXF_MEMBER_KIND_STRUCT,
-    SOMEIPXF_MEMBER_KIND_STRUCT_TLV,
-    SOMEIPXF_MEMBER_KIND_STRING_FIXED,
-    SOMEIPXF_MEMBER_KIND_STRING_DYNAMIC,
-    SOMEIPXF_MEMBER_KIND_ARRAY_FIXED,
-    SOMEIPXF_MEMBER_KIND_ARRAY_DYNAMIC,
-    SOMEIPXF_MEMBER_KIND_ARRAY_VARIABLE_SIZE,
-    SOMEIPXF_MEMBER_KIND_ARRAY_UNION,
-    SOMEIPXF_MEMBER_KIND_MAX
-} SomeIpXf_MemberKindType;
+    SOMEIPXF_DATA_KIND_BASE,
+    SOMEIPXF_DATA_KIND_STRUCT,
+    SOMEIPXF_DATA_KIND_STRING_FIXED,
+    SOMEIPXF_DATA_KIND_STRING_FLEXED,
+    SOMEIPXF_DATA_KIND_ARRAY,
+    SOMEIPXF_DATA_KIND_UNION,
+    SOMEIPXF_DATA_KIND_MAX
+} SomeIpXf_DataKindType;
 
 typedef enum
 {
@@ -197,13 +184,15 @@ typedef enum
     SOMEIPXF_ENDIAN_MAX
 } SomeIpXf_EndianType;
 
-typedef uint32 SomeIpXf_MemberType;
+typedef uint32 SomeIpXf_DataType;
 
 typedef struct
 {
-    SomeIpXf_MemberKindType Kind;
-    SomeIpXf_MemberType Member;
-    uint32 Offset;
+    SomeIpXf_DataKindType Kind;
+    SomeIpXf_DataType Data;
+    uint32 DataOffset;
+    uint8 SpecialSize;
+    uint32 SpecialOffset;
 } SomeIpXf_MemberConfigType;
 
 typedef struct
@@ -216,12 +205,8 @@ typedef struct
 
 typedef struct
 {
-    SomeIpXf_MemberTagType Tag;
-} SomeIpXf_BaseDynamicType;
-
-typedef struct
-{
-    SomeIpXf_LengthFieldSizeType LengthFileSize;
+    uint32 Length;
+    SomeIpXf_LengthFieldSizeType LengthFieldSize;
     SomeIpXf_AlignmentType Alignment;
     SomeIpXf_EndianType Endian;
     SomeIpXf_MemberTagType Tag;
@@ -229,83 +214,62 @@ typedef struct
     SomeIpXf_MemberConfigType *Members;
 } SomeIpXf_StructConfigType;
 
-typedef struct
-{
-    uint32 Length;
-    SomeIpXf_MemberTagType Tag;
-} SomeIpXf_StructDynamicType;
-
-typedef struct
-{
-    SomeIpXf_LengthFieldSizeType LengthFileSize;
-    SomeIpXf_AlignmentType Alignment;
-    SomeIpXf_EndianType Endian;
-    SomeIpXf_MemberTagType Tag;
-} SomeIpXf_StructTlvConfigType;
-
-typedef struct
-{
-    uint32 Length;
-    SomeIpXf_LengthFieldSizeType LengthFileSize;
-    SomeIpXf_MemberTagType Tag;
-    uint32 Availability;
-} SomeIpXf_StructTlvDynamicType;
-
 typedef enum
 {
     SOMEIPXF_STRING_KIND_LEGACY = 0U,
     SOMEIPXF_STRING_KIND_UTF8,
-    SOMEIPXF_STRING_KIND_UTF16BE,
-    SOMEIPXF_STRING_KIND_UTF16LE,
+    SOMEIPXF_STRING_KIND_UTF16,
 } SomeIpXf_StringKindType;
 
 typedef struct
 {
     SomeIpXf_StringKindType Kind;
     uint32 Length;
-    SomeIpXf_LengthFieldSizeType LengthFileSize;
     SomeIpXf_AlignmentType Alignment;
-    SomeIpXf_EndianType Endian;
+    boolean Convert;
     SomeIpXf_MemberTagType Tag;
 } SomeIpXf_StringFixedConfigType;
 
 typedef struct
 {
+    SomeIpXf_StringKindType Kind;
+    SomeIpXf_LengthFieldSizeType LengthFieldSize;
+    SomeIpXf_AlignmentType Alignment;
+    boolean Convert;
     SomeIpXf_MemberTagType Tag;
-} SomeIpXf_StringFixedDynamicType;
+} SomeIpXf_StringFlexedConfigType;
 
 typedef struct
 {
-    SomeIpXf_StringKindType Kind;
+    SomeIpXf_DataKindType Kind;
+    SomeIpXf_DataType Data;
+    uint32 DataOffset;
+    uint8 SpecialSize;
+    uint32 SpecialOffset;
+} SomeIpXf_ElementConfigType;
+
+typedef struct
+{
     uint32 LengthMax;
-    SomeIpXf_LengthFieldSizeType LengthFileSize;
+    SomeIpXf_LengthFieldSizeType LengthFieldSize;
     SomeIpXf_AlignmentType Alignment;
     SomeIpXf_EndianType Endian;
     SomeIpXf_MemberTagType Tag;
-} SomeIpXf_StringDynamicConfigType;
+    SomeIpXf_ElementConfigType *Element;
+} SomeIpXf_ArrayConfigType;
 
 typedef struct
 {
-    uint32 Length;
-    SomeIpXf_MemberTagType Tag;
-} SomeIpXf_StringDynamicDynamicType;
-
-typedef struct
-{
-    SomeIpXf_StringKindType Kind;
-    uint32 Length;
-    SomeIpXf_LengthFieldSizeType LengthFileSize;
-    SomeIpXf_AlignmentType Alignment;
-    SomeIpXf_EndianType Endian;
-    SomeIpXf_MemberTagType Tag;
-} SomeIpXf_ArrayFixedConfigType;
-
-typedef struct
-{
-    SomeIpXf_MemberType BaseConfigNumber;
+    SomeIpXf_DataType BaseCfgNumber;
     SomeIpXf_BaseConfigType *BaseCfgs;
-    SomeIpXf_MemberType StructConfigNumber;
+    SomeIpXf_DataType StructCfgNumber;
     SomeIpXf_StructConfigType *StructCfgs;
+    SomeIpXf_DataType StringFixedCfgNumber;
+    SomeIpXf_StringFixedConfigType *StringFixedCfgs;
+    SomeIpXf_DataType StringFlexedCfgNumber;
+    SomeIpXf_StringFlexedConfigType *StringFlexedCfgs;
+    SomeIpXf_DataType ArrayCfgNumber;
+    SomeIpXf_ArrayConfigType *ArrayCfgs;
 } SomeIpXf_ConfigType;
 
 /****************************************************************************************************

@@ -64,7 +64,11 @@ extern "C" {
 /****************************************************************************************************
  *  GLOBAL FUNCTION PROTOTYPES
  ***************************************************************************************************/
-
+Std_ReturnType SomeIpXf_SerializeBase(SomeIpXf_DataType MemberId, void *Value, uint8 *Buffer, uint32 *BufferLength, uint32 Level);
+Std_ReturnType SomeIpXf_SerializeStruct(SomeIpXf_DataType MemberId, void *Value, uint8 *Buffer, uint32 *BufferLength, uint32 Level);
+Std_ReturnType SomeIpXf_SerializeStringFixed(SomeIpXf_DataType MemberId, void *Value, uint8 *Buffer, uint32 *BufferLength, uint32 Level);
+Std_ReturnType SomeIpXf_SerializeStringFlexed(SomeIpXf_DataType MemberId, void *Value, uint32 StringLength, uint8 *Buffer, uint32 *BufferLength, uint32 Level);
+Std_ReturnType SomeIpXf_SerializeArray(SomeIpXf_DataType MemberId, void *Value, uint32 ArrayNumber, uint8 *Buffer, uint32 *BufferLength, uint32 Level);
 
 
 #ifdef __cplusplus
